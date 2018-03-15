@@ -2,7 +2,15 @@ body {
     font-family: 'Arvo';
     font-size: 16px;
     padding: 20px 100px 0px 100px;
-    background: #f3f3f3;
+    background-size: cover;
+}
+
+h1 {
+  color: white;
+}
+
+p {
+  color: white;
 }
 
 /* List */
@@ -66,6 +74,19 @@ input[type=text] {
 button {
     font-family: 'Arvo';
     font-size: 1em;
+}
+
+footer {
+  background-color: rgba(235, 233, 233, 0.5);
+  padding: 5px;
+  position: absolute;
+  bottom: 100px;
+  width: 100%;
+  left: 0;
+}
+
+footer p {
+  text-align: center;
 }
 
 i {
