@@ -1,3 +1,5 @@
+Vue.component('star-rating', VueStarRating.default);
+
 var app = new Vue({
   el: '#app',
   data: {
@@ -5,7 +7,6 @@ var app = new Vue({
     text: '',
     show: 'all',
     drag: {},
-    rating: '',
   },
   computed: {
     activeItems: function() {
@@ -33,22 +34,24 @@ var app = new Vue({
       this.getItems();
     },
   },
+  created: function() {
+      this.getItems();
+  },
   methods: {
     addItem: function() {
-      this.rating = "No rating"
       axios.post("http://localhost:3000/api/items", {
       	text: this.text,
-        rating: this.rating,
+        rating: 0,
       	completed: false
       }).then(response => {
       	this.text = "";
-        this.rating = "";
       	this.getItems();
       	return true;
       }).catch(err => {
       });
     },
     completeItem: function(item) {
+      console.log(item.rating)
      axios.put("http://localhost:3000/api/items/" + item.id, {
        text: item.text,
        completed: !item.completed,
@@ -60,36 +63,19 @@ var app = new Vue({
      }).catch(err => {
      });
    },
-   ratingDown: function(item) {
-     if (item.rating < 3) {
-       item.rating++;
-     }
-     axios.put("http://localhost:3000/api/items/" + item.id, {
-       text: item.text,
-       completed: item.completed,
-       rating: item.rating,
-       orderChange: false,
-       sortBool: false,
-     }).then(response => {
-       return true;
-     }).catch(err => {
-     });
-    },
-   ratingUp: function(item) {
-      if (item.rating > 1) {
-        item.rating--;
-      }
+   setRating: function(item){
+      console.log(item.rating)
       axios.put("http://localhost:3000/api/items/" + item.id, {
         text: item.text,
         completed: item.completed,
         rating: item.rating,
         orderChange: false,
-        sortBool: false
+        sortBool: false,
       }).then(response => {
         return true;
       }).catch(err => {
       });
-   },
+    },
    deleteItem: function(item) {
       axios.delete("http://localhost:3000/api/items/" + item.id).then(response => {
       	this.getItems();

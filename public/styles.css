@@ -49,11 +49,6 @@ label {
     margin-bottom: auto;
 }
 
-.priorityDiv {
-  margin-left: auto;
-  margin-right: auto;
-}
-
 .completed {
     text-decoration: line-through;
 }
