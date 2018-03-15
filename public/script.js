@@ -5,7 +5,7 @@ var app = new Vue({
     text: '',
     show: 'all',
     drag: {},
-    priority: '',
+    rating: '',
   },
   computed: {
     activeItems: function() {
@@ -35,22 +35,14 @@ var app = new Vue({
   },
   methods: {
     addItem: function() {
-      if (this.priority === "1") {
-       this.priority = 1;
-      }
-      else if (this.priority === "2") {
-       this.priority = 2;
-      }
-      else if (this.priority === "3") {
-        this.priority = 3;
-      }
+      this.rating = "No rating"
       axios.post("http://localhost:3000/api/items", {
       	text: this.text,
-        priority: this.priority,
+        rating: this.rating,
       	completed: false
       }).then(response => {
       	this.text = "";
-        this.priority = "";
+        this.rating = "";
       	this.getItems();
       	return true;
       }).catch(err => {
@@ -60,7 +52,7 @@ var app = new Vue({
      axios.put("http://localhost:3000/api/items/" + item.id, {
        text: item.text,
        completed: !item.completed,
-       priority: item.priority,
+       rating: item.rating,
        orderChange: false,
        sortBool: false,
      }).then(response => {
@@ -68,14 +60,14 @@ var app = new Vue({
      }).catch(err => {
      });
    },
-   priorityUp: function(item) {
-     if (item.priority < 3) {
-       item.priority++;
+   ratingDown: function(item) {
+     if (item.rating < 3) {
+       item.rating++;
      }
      axios.put("http://localhost:3000/api/items/" + item.id, {
        text: item.text,
        completed: item.completed,
-       priority: item.priority,
+       rating: item.rating,
        orderChange: false,
        sortBool: false,
      }).then(response => {
@@ -83,14 +75,14 @@ var app = new Vue({
      }).catch(err => {
      });
     },
-   priorityDown: function(item) {
-      if (item.priority > 1) {
-        item.priority--;
+   ratingUp: function(item) {
+      if (item.rating > 1) {
+        item.rating--;
       }
       axios.put("http://localhost:3000/api/items/" + item.id, {
         text: item.text,
         completed: item.completed,
-        priority: item.priority,
+        rating: item.rating,
         orderChange: false,
         sortBool: false
       }).then(response => {
@@ -128,7 +120,7 @@ var app = new Vue({
    },
    sortLoop: function(value, counter) {
       for (var i = 0; i < this.items.length; i++) {
-        if (this.items[i].priority == value) {
+        if (this.items[i].rating == value) {
           console.log(counter, ": ", value, ", ", this.items[i].id);
           this.sortMove(this.items[i], counter);
           counter++;
@@ -140,7 +132,7 @@ var app = new Vue({
       axios.put("http://localhost:3000/api/items/" + item.id, {
       	text: item.text,
       	completed: item.completed,
-        priority: item.priority,
+        rating: item.rating,
       	orderChange: true,
         sortBool: true,
       	orderTarget: counter
@@ -157,7 +149,7 @@ var app = new Vue({
       axios.put("http://localhost:3000/api/items/" + this.drag.id, {
       	text: this.drag.text,
       	completed: this.drag.completed,
-        priority: this.drag.priority,
+        rating: this.drag.rating,
       	orderChange: true,
         sortBool: false,
       	orderTarget: item.id
