@@ -24,16 +24,6 @@
       	<button v-on:click="showActive()">Show Unwatched</button>
       	<button v-on:click="showCompleted()">Show Watched</button>
       	<button v-on:click="deleteCompleted()">Delete Watched</button>
-          <select v-model="filterRatings">
-            <option disabled value="">Filter by ratings</option>
-            <option>All ratings</option>
-            <option>No rating</option>
-            <option>1 star</option>
-            <option>2 stars</option>
-            <option>3 stars</option>
-            <option>4 stars</option>
-            <option>5 stars</option>
-          </select>
         <button v-on:click="sort()">Sort</button>
       </div>
       <ul>
