@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -5,42 +6,47 @@
     <link rel="stylesheet" href="/styles.css"/>
     <title>Vue Todo</title>
   </head>
-  <body background="/images/movieBackground.jpg">
+  <body>
     <div id="app">
-      <h1>Movie List</h1>
-      <p v-show="completedItems.length === 0">You have not seen any movies, you uncultered swine!</p>
+      <h1>A List of Things To Do</h1>
+      <p v-show="activeItems.length === 0">You are done with all your tasks! Good job!</p>
       <form v-on:submit.prevent="addItem">
-      	<input type="text" v-model="text" placeholder="Movie to watch">
+      	<input type="text" v-model="text">
+        <select v-model="priority">
+          <option disabled value="">Please select the priority</option>
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+        </select>
       	<button type="submit">Add</button>
       </form>
       <div class="controls">
       	<button v-on:click="showAll()">Show All</button>
-      	<button v-on:click="showActive()">Show Unwatched</button>
-      	<button v-on:click="showCompleted()">Show Watched</button>
-      	<button v-on:click="deleteCompleted()">Delete Watched</button>
+      	<button v-on:click="showActive()">Show Active</button>
+      	<button v-on:click="showCompleted()">Show Completed</button>
+      	<button v-on:click="deleteCompleted()">Delete Completed</button>
         <button v-on:click="sort()">Sort</button>
       </div>
       <ul>
       	<li v-for="item in filteredItems" draggable="true" v-on:dragstart="dragItem(item)" v-on:dragover.prevent v-on:drop="dropItem(item)">
       	  <input type="checkbox" v-model="item.completed" v-on:click="completeItem(item)" />
           <label v-bind:class="{ completed: item.completed }">{{ item.text }}</label>
-
-          <star-rating border-color="#999" active-color="gold" v-model="item.rating"  @rating-selected ="setRating(item)"></star-rating>
-
-            <!-- <button v-on:click="ratingUp(item)"><i class="up"></i></button>
-            <button v-on:click="ratingDown(item)"><i class="down"></i></button> -->
+          <div class="priorityDiv" v-bind="item.priority">
+            <p>Priority: {{ item.priority }}</p>
+            <button v-on:click="priorityUp(item)"><i class="up"></i></button>
+            <button v-on:click="priorityDown(item)"><i class="down"></i></button>
+          </div>
           <button v-on:click="deleteItem(item)" class="delete">X</button>
       	</li>
       </ul>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js" integrity="sha256-mpnrJ5DpEZZkwkE1ZgkEQQJW/46CSEh/STrZKOB/qoM=" crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/vue-star-rating/dist/star-rating.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.13/vue.js" integrity="sha256-pU9euBaEcVl8Gtg+FRYCtin2vKLN8sx5/4npZDmY2VA=" crossorigin="anonymous"></script>
     <script src="/script.js"></script>
 
     <footer>
-      <p> Presented by Lindsey Woolf and Nicole Theurer</p>
-      <p><a href="https://github.com/TeamLicole/movieRankings">GitHub Link</a></p>
+      <a href="https://github.com/BYU-CS260-Winter-2018/lab-4-ntheurer">GitHub Classroom Link</a>
     </footer>
   </body>
 </html>
+
